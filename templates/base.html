@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather check app</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h1>Weather App</h1>
+
+    <form method="POST">
+    <input type="text" class="city" name="city" placeholder="Enter city name" required>
+    <button type="submit" class="btn">Search</button>
+    </form>
+
+    
+        {% if weather_data %}
+            <div class="container">
+            {% if weather_data.error %}
+                 <p>{{ weather_data.error }}</p>
+            {% else %}
+                    <h2>{{ weather_data.name }} </h2>
+                    
+                    {% set icon_code = weather_data.weather[0].icon %}
+                    <img src="http://openweathermap.org/img/wn/{{ icon_code }}@2x.png" alt="Weather Icon">
+
+                    <h2>{{ weather_data.main.temp }}&deg;C </h2>
+                    <p>Description:{{ weather_data.weather[0].description }}</p>
+                    <p>Humidity: {{ weather_data.main.humidity }} % </p>
+                    <p>Wind Speed: {{ weather_data.wind.speed }} m/s </p>
+
+            {% endif %}
+            </div>
+        {% endif  %}
+
+</body>
+</html>
